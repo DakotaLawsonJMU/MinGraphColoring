@@ -1,0 +1,22 @@
+21
+a b
+a d
+b c
+b d
+b e
+b i
+c e
+c i
+c j
+d e
+d f
+d g
+d h
+d i
+e i
+e j
+f g
+g h
+g i
+h j
+i j
