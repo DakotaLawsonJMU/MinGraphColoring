@@ -79,7 +79,6 @@ def color_neighbors_of( vertices, graph, colors ):
 
     local = local_graph( vertices, graph )
 
-  
 
 def highest_degree_vertex( graph ):
   highest_degree = -1
@@ -200,6 +199,7 @@ def main():
 
   for vertex in graph:
     print(f"{vertex} {graph[vertex]['color']}")
+
 
 if __name__ == "__main__":
   main()
