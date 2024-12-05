@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # https://stackoverflow.com/questions/10523415/execute-command-on-all-files-in-a-directory
-for program in code_solution/*
+for program in minGraphColor*.py
 do
 
   echo "============================="
