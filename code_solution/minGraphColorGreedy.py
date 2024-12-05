@@ -177,8 +177,8 @@ def min_color_approx( graph ):
   return len(colors)
 
 def main():
-  if len(sys.argv) != 2:
-    print(f"Usage: python3 {sys.argv[0]} [input file]")
+  if len(sys.argv) != 3:
+    print(f"Usage: python3 {sys.argv[0]} [input file] [output file]")
     exit()
 
   with open(sys.argv[1]) as file:
@@ -195,10 +195,19 @@ def main():
 
   solution = min_color_approx( graph )
 
-  print(solution)
+  summary( sys.argv[1], sys.argv[2], len(graph), num_edges, solution )
 
-  for vertex in graph:
-    print(f"{vertex} {graph[vertex]['color']}")
+  with open(sys.argv[2], 'w') as file:
+    file.write(f"{solution}\n")
+
+    for vertex in graph:
+      file.write(f"{vertex} {graph[vertex]['color']}\n")
+      
+
+def summary( file_in, file_out, vertices, edges, colors ):
+  print(f"the graph found in {file_in} having {vertices} vertices and {edges} edges can be colored with {colors} colors")
+  print(f"wrting solution to {file_out}")
+
 
 
 if __name__ == "__main__":
