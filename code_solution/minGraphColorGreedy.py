@@ -1,5 +1,5 @@
 import sys
-import json
+import time
 
 def create_graph( edges ):
   
@@ -30,10 +30,8 @@ def color_vertex( vertex, graph, colors ):
   if len(colors_copy) == 0:
     graph[vertex]["color"] = len(colors)
     colors.append(len(colors))
-    #print(f"colored {vertex} with {len(colors)-1}")
   else:
     graph[vertex]["color"] = colors_copy[0]
-    #print(f"colored {vertex} with {colors_copy[0]}")
   
 
 
@@ -60,16 +58,11 @@ def local_graph( vertices, graph ):
 
 def color_neighbors_of( vertices, graph, colors ):
 
-  #print(f"coloring neighborhood of {vertices}")
-  #print(json.dumps(graph, indent=2))
-  #print(colors)
-
   # list of all vertices adjacent to everything in given vertices list
   local = local_graph( vertices, graph )
   #print(f"locality: {local}")
 
   while len(local) != 0:
-    #print("inside while loop")
     next_vertex = highest_local_uncolored_degree( graph, local )
     color_vertex( next_vertex, graph, colors )
 
@@ -94,22 +87,16 @@ def highest_degree_vertex( graph ):
 
 # returns the colored vertex with the highest uncolored degree
 def highest_uncolored_degree( graph ):
-  #print("################################")
-  #print("highest_uncolored_degree()\n")
   highest_degree = -1
   retval = None
 
   for vertex in graph:
     degree = 0
 
-    #print(f"vertex: {vertex}")
-
     if graph[vertex]["color"] == -1:
-      #print(f"{vertex} is colored, continuing")
       continue
 
     for neighbor in graph[vertex]["neighbors"]:
-      #print(f"\tneighbor: {neighbor}")
       if graph[neighbor]["color"] == -1:
         degree += 1
 
@@ -169,9 +156,7 @@ def min_color_approx( graph ):
   # while the coloring is not done choose the colored vertex adjacent
   # to the most uncolored vertices, and color those uncolored neighbors
   while not colored( graph ):
-    #print("graph not colored, running main loop again")
     vertex = highest_uncolored_degree( graph )
-    #print(f"using vertex {vertex}")
     color_neighbors_of( [vertex], graph, colors )
 
   return len(colors)
@@ -193,9 +178,11 @@ def main():
 
   graph = create_graph( edges )
 
+  start = time.time_ns()
   solution = min_color_approx( graph )
+  end = time.time_ns()
 
-  summary( sys.argv[1], sys.argv[2], len(graph), num_edges, solution )
+  summary( sys.argv[1], sys.argv[2], len(graph), num_edges, solution, end - start )
 
   with open(sys.argv[2], 'w') as file:
     file.write(f"{solution}\n")
@@ -204,10 +191,13 @@ def main():
       file.write(f"{vertex} {graph[vertex]['color']}\n")
       
 
-def summary( file_in, file_out, vertices, edges, colors ):
-  print(f"the graph found in {file_in} having {vertices} vertices and {edges} edges can be colored with {colors} colors")
-  print(f"wrting solution to {file_out}")
-
+def summary( file_in, file_out, vertices, edges, colors, nanoseconds ):
+  print(f"time:\t\t{round(nanoseconds / 1_000_000_000, 3)}")
+  print(f"input file:\t{file_in}")
+  print(f"output file:\t{file_out}")
+  print(f"vertices:\t{vertices}")
+  print(f"edges:\t\t{edges}")
+  print(f"colors used:\t{colors}")
 
 
 if __name__ == "__main__":
