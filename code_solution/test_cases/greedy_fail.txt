@@ -1,0 +1,9 @@
+7
+a b
+a c
+a e
+b c
+b d
+c f
+d f
+e f
