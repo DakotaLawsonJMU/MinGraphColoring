@@ -1,22 +1,6 @@
 import sys
 import time
-
-def create_graph( edges ):
-  
-  graph = {}
-
-  for v1, v2 in edges:
-
-    if v1 not in graph:
-      graph[v1] = {"color": -1, "neighbors": []}
-    if v2 not in graph:
-      graph[v2] = {"color": -1, "neighbors": []}
-
-    graph[v1]["neighbors"].append(v2)
-    graph[v2]["neighbors"].append(v1)
-
-  return graph
-
+import helpers
 
 def color_vertex( vertex, graph, colors ):
 
@@ -176,13 +160,13 @@ def main():
     vertices = line.split()
     edges.append( (vertices[0], vertices[1]) )
 
-  graph = create_graph( edges )
+  graph = helpers.create_graph( edges )
 
   start = time.time_ns()
   solution = min_color_approx( graph )
   end = time.time_ns()
 
-  summary( sys.argv[1], sys.argv[2], len(graph), num_edges, solution, end - start )
+  helpers.summary( sys.argv[1], sys.argv[2], len(graph), num_edges, solution, end - start )
 
   with open(sys.argv[2], 'w') as file:
     file.write(f"{solution}\n")
@@ -190,15 +174,6 @@ def main():
     for vertex in graph:
       file.write(f"{vertex} {graph[vertex]['color']}\n")
       
-
-def summary( file_in, file_out, vertices, edges, colors, nanoseconds ):
-  print(f"time:\t\t{round(nanoseconds / 1_000_000_000, 3)}")
-  print(f"input file:\t{file_in}")
-  print(f"output file:\t{file_out}")
-  print(f"vertices:\t{vertices}")
-  print(f"edges:\t\t{edges}")
-  print(f"colors used:\t{colors}")
-
 
 if __name__ == "__main__":
   main()

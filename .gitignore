@@ -1,1 +1,2 @@
 code_solution/outputs/*.txt
+__pycache__
