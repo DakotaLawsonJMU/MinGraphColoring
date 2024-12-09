@@ -2,7 +2,7 @@
 
 echo "============================="
 echo "Testing Solver"
-echo "=============================\n"
+echo "============================="
 
 counter=0
 
@@ -11,7 +11,7 @@ for file in test_cases/*
 do
 
   echo "Test case:" "$file"
-  python3 minGraphColorSolver.py "$file" outputs/solver-"$counter".txt
+  timeout 5 python3 minGraphColorSolver.py "$file" outputs/solver-"$counter".txt
   echo
 
   # https://stackoverflow.com/questions/6348902/how-can-i-add-numbers-in-a-bash-script
@@ -24,7 +24,7 @@ echo
 
 echo "============================="
 echo "Testing Greedy"
-echo "=============================\n"
+echo "============================="
 
 counter=0
 
@@ -32,7 +32,7 @@ for file in test_cases/*
 do
 
   echo "Test case:" "$file"
-  python3 minGraphColorGreedy.py "$file" outputs/greedy-"$counter".txt
+  timeout 5 python3 minGraphColorGreedy.py "$file" outputs/greedy-"$counter".txt
   echo
 
   counter=$(($counter+1))
@@ -43,7 +43,7 @@ echo
 
 echo "============================="
 echo "Testing Annealing"
-echo "=============================\n"
+echo "============================="
 
 counter=0
 
@@ -51,7 +51,7 @@ for file in test_cases/*
 do
 
   echo "Test case:" "$file"
-  python3 minGraphColorAnnealing.py "$file" outputs/annealing-"$counter".txt
+  timeout 5 python3 minGraphColorAnnealing.py "$file" outputs/annealing-"$counter".txt
   echo
 
   counter=$(($counter+1))
