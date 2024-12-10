@@ -1,11 +1,11 @@
 def summary( file_in, file_out, vertices, edges, colors, nanoseconds ):
-  print(f"{nanoseconds / 1_000_000_000},"
-  f"{file_in},"
-  f"{file_out},"
+  print( f"{file_in},"
+  f"{nanoseconds / 1_000_000_000},"
+  f"{colors},"
   f"{vertices},"
   f"{edges},"
   f"{2 * edges / (vertices * (vertices-1))},"
-  f"{colors}")
+  f"{file_out}")
   #print(f"time:\t\t{round(nanoseconds / 1_000_000_000, 4)}")
   #print(f"input file:\t{file_in}")
   #print(f"output file:\t{file_out}")

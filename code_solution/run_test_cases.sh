@@ -16,10 +16,7 @@ do
   echo "Test case:" "$file"
 
   # https://stackoverflow.com/questions/7851889/kill-process-after-a-given-time-bash
-  timeout 15 python3 minGraphColorSolver.py "$file" outputs/solver-"$counter".txt | tee -a results.txt
-  if [ $? -eq 124 ]; then
-    echo ",$file" >> results.txt
-  fi
+  timeout 3 python3 minGraphColorSolver.py "$file" outputs/solver-"$counter".txt | tee -a results.txt
 
   echo
 
@@ -27,6 +24,11 @@ do
   counter=$(($counter+1))
 
 done
+
+python3 minGraphColorSolver.py test_outputs/k-11 outputs/solver-"$counter".txt | tee -a results.txt
+python3 minGraphColorSolver.py test_outputs/k-12 outputs/solver-"$counter".txt | tee -a results.txt
+python3 minGraphColorSolver.py test_outputs/k-13 outputs/solver-"$counter".txt | tee -a results.txt
+counter=$(($counter+1))
 
 echo
 
@@ -41,10 +43,7 @@ for file in test_cases/*
 do
 
   echo "Test case:" "$file"
-  timeout 15 python3 minGraphColorGreedy.py "$file" outputs/greedy-"$counter".txt | tee -a results.txt
-  if [ $? -eq 124 ]; then
-    echo ",$file" >> results.txt
-  fi
+  timeout 3 python3 minGraphColorGreedy.py "$file" outputs/greedy-"$counter".txt | tee -a results.txt
   echo
 
   counter=$(($counter+1))
@@ -62,14 +61,14 @@ counter=0
 for file in test_cases/*
 do
 
-  echo "Test case:" "$file"
-  timeout 15 python3 minGraphColorAnnealing.py "$file" outputs/annealing-"$counter".txt | tee -a results.txt
-  if [ $? -eq 124 ]; then
-    echo ",$file" >> results.txt
-  fi
-  echo
+  for i in {0..9}
+  do
+    echo "Test case:" "$file"
+    timeout 3 python3 minGraphColorAnnealing.py "$file" outputs/annealing-"$counter".txt | tee -a results.txt
+    echo
+    counter=$(($counter+1))
+  done
 
-  counter=$(($counter+1))
 
 done
 
