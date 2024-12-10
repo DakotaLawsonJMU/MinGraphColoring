@@ -1,10 +1,18 @@
 def summary( file_in, file_out, vertices, edges, colors, nanoseconds ):
-  print(f"time:\t\t{round(nanoseconds / 1_000_000_000, 3)}")
-  print(f"input file:\t{file_in}")
-  print(f"output file:\t{file_out}")
-  print(f"vertices:\t{vertices}")
-  print(f"edges:\t\t{edges}")
-  print(f"colors used:\t{colors}")
+  print(f"{nanoseconds / 1_000_000_000},"
+  f"{file_in},"
+  f"{file_out},"
+  f"{vertices},"
+  f"{edges},"
+  f"{2 * edges / (vertices * (vertices-1))},"
+  f"{colors}")
+  #print(f"time:\t\t{round(nanoseconds / 1_000_000_000, 4)}")
+  #print(f"input file:\t{file_in}")
+  #print(f"output file:\t{file_out}")
+  #print(f"vertices:\t{vertices}")
+  #print(f"edges:\t\t{edges}")
+  #print(f"density:\t{round(2 * edges / (vertices * (vertices-1)), 4)}")
+  #print(f"colors used:\t{colors}")
 
 
 def create_graph( edges ):
