@@ -6,12 +6,21 @@ echo "============================="
 
 counter=0
 
+touch results.txt
+truncate -s 0 results.txt
+
 # https://stackoverflow.com/questions/10523415/execute-command-on-all-files-in-a-directory
 for file in test_cases/*
 do
 
   echo "Test case:" "$file"
-  timeout 5 python3 minGraphColorSolver.py "$file" outputs/solver-"$counter".txt
+
+  # https://stackoverflow.com/questions/7851889/kill-process-after-a-given-time-bash
+  timeout 15 python3 minGraphColorSolver.py "$file" outputs/solver-"$counter".txt | tee -a results.txt
+  if [ $? -eq 124 ]; then
+    echo ",$file" >> results.txt
+  fi
+
   echo
 
   # https://stackoverflow.com/questions/6348902/how-can-i-add-numbers-in-a-bash-script
@@ -32,7 +41,10 @@ for file in test_cases/*
 do
 
   echo "Test case:" "$file"
-  timeout 5 python3 minGraphColorGreedy.py "$file" outputs/greedy-"$counter".txt
+  timeout 15 python3 minGraphColorGreedy.py "$file" outputs/greedy-"$counter".txt | tee -a results.txt
+  if [ $? -eq 124 ]; then
+    echo ",$file" >> results.txt
+  fi
   echo
 
   counter=$(($counter+1))
@@ -51,7 +63,10 @@ for file in test_cases/*
 do
 
   echo "Test case:" "$file"
-  timeout 5 python3 minGraphColorAnnealing.py "$file" outputs/annealing-"$counter".txt
+  timeout 15 python3 minGraphColorAnnealing.py "$file" outputs/annealing-"$counter".txt | tee -a results.txt
+  if [ $? -eq 124 ]; then
+    echo ",$file" >> results.txt
+  fi
   echo
 
   counter=$(($counter+1))
