@@ -152,7 +152,18 @@ def deviation(colors, current_colors):
     processed_dict = dict()
     for key in current_colors:
         processed_dict[key] = colors[key]
-    amounts = list(processed_dict.values())
+
+    sort = sorted(processed_dict.items(),
+                  key=lambda item: item[1], reverse=True)
+
+    top_3_dict = {}
+    for i, (key, value) in enumerate(sort):
+        if i < 3:
+            top_3_dict[key] = value
+        else:
+            break
+
+    amounts = list(top_3_dict.values())
     avg = sum(amounts) / len(amounts)
     sum_diff = 0
     for amount in amounts:
@@ -211,13 +222,13 @@ def change_dist(graph, node_key, colors,
 
 def value_change(graph, temperature, max_temp, node_key,
                  colors: dict, current_colors, new_color, added_color):
-    num_colors = 0.6
-    all_proportion = 0.1
-    local_proportion = 0.2
+    num_colors = 1
+    all_proportion = 0.0
+    local_proportion = 0.0
 
     local_depth = 2
 
-    chance = 0.1 * (temperature / max_temp)
+    chance = 0.9 * math.log(temperature / max_temp)
 
     if not added_color and colors[graph[node_key]["color"]] == 1:
         chance += num_colors
@@ -298,7 +309,7 @@ def annealing_approx(graph: dict):
     # maximized graphs that don't mesh with each other and result in
     # greater overall colors.
     intialize_coloring(graph, ColorMethod.ADD_WHEN_NEEDED)
-    max_temp = len(graph.keys())
+    max_temp = len(graph.keys()) * 10
     tempurature = max_temp
 
     colors = validate_graph(graph)
@@ -312,7 +323,6 @@ def annealing_approx(graph: dict):
         move(graph, tempurature, max_temp,
              random_node_key, colors, current_colors, Move.CHANGE)
         tempurature -= 1
-
     return len(validate_graph(graph))
 
 
