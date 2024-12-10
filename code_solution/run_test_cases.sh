@@ -25,9 +25,9 @@ do
 
 done
 
-python3 minGraphColorSolver.py test_outputs/k-11 outputs/solver-"$counter".txt | tee -a results.txt
-python3 minGraphColorSolver.py test_outputs/k-12 outputs/solver-"$counter".txt | tee -a results.txt
-python3 minGraphColorSolver.py test_outputs/k-13 outputs/solver-"$counter".txt | tee -a results.txt
+python3 minGraphColorSolver.py test_cases/k-11.txt outputs/solver-"$counter".txt | tee -a results.txt
+python3 minGraphColorSolver.py test_cases/k-12.txt outputs/solver-"$counter".txt | tee -a results.txt
+python3 minGraphColorSolver.py test_cases/k-13.txt outputs/solver-"$counter".txt | tee -a results.txt
 counter=$(($counter+1))
 
 echo
